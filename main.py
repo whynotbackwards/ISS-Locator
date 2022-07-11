@@ -42,8 +42,15 @@ def is_night():
     sunset_utc = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
     utc_now = dt.utcnow().hour
+    local_now = dt.now().hour
+    if utc_now < local_now:
+        utc_now += 24
+    local_utc_offset = local_now - utc_now
 
-    if utc_now >= sunset_utc or utc_now <= sunrise_utc:
+    sunrise = (sunrise_utc + local_utc_offset) % 24
+    sunset = (sunset_utc + local_utc_offset) % 24
+
+    if local_now >= sunset or local_now <= sunrise:
         return True  # It's dark
 
 
