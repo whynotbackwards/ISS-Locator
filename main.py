@@ -1,5 +1,7 @@
 import requests
 from datetime import datetime as dt
+from timezonefinder import TimezoneFinder
+import pytz
 import smtplib
 import time
 
@@ -41,8 +43,11 @@ def is_night():
     sunrise_utc = int(data["results"]["sunrise"].split("T")[1].split(":")[0])
     sunset_utc = int(data["results"]["sunset"].split("T")[1].split(":")[0])
 
+    tz_finder = TimezoneFinder()
+    tz = tz_finder.timezone_at(lat=MY_LAT, lng=MY_LONG)
+
     utc_now = dt.utcnow().hour
-    local_now = dt.now().hour
+    local_now = dt.now(tz=pytz.timezone(tz)).hour
     if utc_now < local_now:
         utc_now += 24
     local_utc_offset = local_now - utc_now
