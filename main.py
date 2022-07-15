@@ -69,7 +69,7 @@ while True:
         cnxn.sendmail(
             from_addr=FROM_EMAIL,
             to_addrs=TO_EMAIL,
-            msg=f"Subject:Look Up!\n\nThe ISS is currently above you at {iss_location}! "
+            msg=f"To: {TO_EMAIL}\nSubject: Look Up!\n\nThe ISS is currently above you at {iss_location}! "
                 f"Put your glasses on and go check it out!"
         )
         time.sleep(240)
